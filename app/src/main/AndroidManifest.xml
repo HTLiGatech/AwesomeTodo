@@ -24,6 +24,8 @@
             android:name=".TodoEditActivity"
             android:theme="@style/AppTheme.NoActionBarShadow"/>
 
+        <receiver android:name=".AlarmReceiver"/>
+
     </application>
 
 </manifest>

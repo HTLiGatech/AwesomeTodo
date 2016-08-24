@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.jiuzhang.guojing.awesometodo.models.Todo;
+import com.jiuzhang.guojing.awesometodo.utils.AlarmUtils;
 import com.jiuzhang.guojing.awesometodo.utils.DateUtils;
 import com.jiuzhang.guojing.awesometodo.utils.UIUtils;
 
@@ -168,6 +169,8 @@ public class TodoEditActivity extends AppCompatActivity implements
         todo.done = completeCb.isChecked();
         todo.text = todoEdit.getText().toString();
         todo.remindDate = remindDate;
+
+        AlarmUtils.setAlarm(this, remindDate);
 
         Intent result = new Intent();
         result.putExtra(KEY_TODO, todo);
