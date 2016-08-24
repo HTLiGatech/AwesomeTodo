@@ -3,7 +3,9 @@ package com.jiuzhang.guojing.awesometodo;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ public class TodoEditActivity extends AppCompatActivity implements
         TimePickerDialog.OnTimeSetListener {
 
     public static final String KEY_TODO = "todo";
+    public static final String KEY_NOTIFICATION_ID = "notification_id";
 
     private EditText todoEdit;
     private TextView dateTv;
@@ -51,6 +54,14 @@ public class TodoEditActivity extends AppCompatActivity implements
                 : Calendar.getInstance().getTime();
 
         setupUI();
+        cancelNotificationIfNeeded();
+    }
+
+    private void cancelNotificationIfNeeded() {
+        int notificationId = getIntent().getIntExtra(KEY_NOTIFICATION_ID, -1);
+        if (notificationId != -1) {
+            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(notificationId);
+        }
     }
 
     @Override
@@ -170,7 +181,7 @@ public class TodoEditActivity extends AppCompatActivity implements
         todo.text = todoEdit.getText().toString();
         todo.remindDate = remindDate;
 
-        AlarmUtils.setAlarm(this, remindDate);
+        AlarmUtils.setAlarm(this, todo);
 
         Intent result = new Intent();
         result.putExtra(KEY_TODO, todo);
