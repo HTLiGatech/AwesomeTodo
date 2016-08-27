@@ -27,7 +27,9 @@ public class Todo implements Parcelable {
         id = in.readString();
         text = in.readString();
         done = in.readByte() != 0;
-        remindDate = new Date(in.readLong());
+
+        long date = in.readLong();
+        remindDate = date == 0 ? null : new Date(date);
     }
 
     public static final Creator<Todo> CREATOR = new Creator<Todo>() {
@@ -52,6 +54,6 @@ public class Todo implements Parcelable {
         dest.writeString(id);
         dest.writeString(text);
         dest.writeByte((byte) (done ? 1 : 0));
-        dest.writeLong(remindDate.getTime());
+        dest.writeLong(remindDate != null ? remindDate.getTime() : 0);
     }
 }

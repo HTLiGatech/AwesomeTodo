@@ -1,0 +1,20 @@
+For class 4, check out the following branches IN ORDER
+	crappy_list: Implemented list view using what we learned in class 3.
+	crappy_list_refactored: Created TodoListConverter.
+	list_view: Created TodoListAdapter and used ListView to display list data.
+	list_view_convert_view: Used convertView in adapter.
+	list_view_convert_view_view_holder: Used convertView and view holder in adapter.
+	add_edit_delete_save_todo: Added the ability to add, edit, delete todos and persist data.
+	add_edit_delete_save_todo_with_alarm: Alarm functionality. Show a toast upon alarm.
+	after_class_4: All the above features, plus showing a notification upon alarm.
+
+For class 5 check out the following branches IN ORDER
+	list_view_view_holder_adapter: Created ViewHolderAdapter to force using ViewHolder in ListView
+	recycler_view: Used RecyclerView to show the list instead of ListView
+	recycler_view_grid_layout: RecyclerView with GridLayoutManager
+	recycler_view_staggerd_grid_layout: RecyclerView with StaggeredGridLayoutManager
+	fragment: Set Fragment as the content of MainActivity.
+
+notice
+	如果在check out的时候提示force checkout或smart checkout，请选force checkout。
+	选择force checkout会discard对当前branch所做的一切修改。

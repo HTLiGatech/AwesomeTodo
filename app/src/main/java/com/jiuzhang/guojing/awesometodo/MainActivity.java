@@ -1,13 +1,10 @@
 package com.jiuzhang.guojing.awesometodo;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -53,8 +50,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_CODE_TODO_EDIT && resultCode == Activity.RESULT_OK) {
-            Todo todo = data.getParcelableExtra(TodoEditActivity.KEY_TODO);
-            updateTodo(todo);
+            String todoId = data.getStringExtra(TodoEditActivity.KEY_TODO_ID);
+            if (todoId != null) {
+                deleteTodo(todoId);
+            } else {
+                Todo todo = data.getParcelableExtra(TodoEditActivity.KEY_TODO);
+                updateTodo(todo);
+            }
         }
     }
 
@@ -73,15 +75,27 @@ public class MainActivity extends AppCompatActivity {
             todos.add(todo);
         }
 
-        ModelUtils.save(this, TODOS, todos);
-
         adapter.notifyDataSetChanged();
+        ModelUtils.save(this, TODOS, todos);
     }
 
     public void updateTodo(int index, boolean done) {
         todos.get(index).done = done;
-        adapter.notifyDataSetChanged();
 
+        adapter.notifyDataSetChanged();
+        ModelUtils.save(this, TODOS, todos);
+    }
+
+    private void deleteTodo(@NonNull String todoId) {
+        for (int i = 0; i < todos.size(); ++i) {
+            Todo item = todos.get(i);
+            if (TextUtils.equals(item.id, todoId)) {
+                todos.remove(i);
+                break;
+            }
+        }
+
+        adapter.notifyDataSetChanged();
         ModelUtils.save(this, TODOS, todos);
     }
 
